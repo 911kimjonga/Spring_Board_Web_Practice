@@ -3,10 +3,10 @@ package com.ezen.springmvc.domain.member.mapper;
 import com.ezen.springmvc.domain.member.dto.MemberDTO;
 import com.ezen.springmvc.domain.member.dto.MemberSearchCondition;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,10 +19,17 @@ class MemberMapperTest {
     private MemberMapper memberMapper;
 
     @Test
-    @Disabled
+    @Transactional
     void create() {
         //given
+        MemberDTO memberDTO = MemberDTO.builder()
+                .id("hong")
+                .passwd("1234")
+                .name("홍길동")
+                .email("hong@gmail.com")
+                .build();
         //when
+        memberMapper.create(memberDTO);
         //then
     }
 
@@ -108,10 +115,15 @@ class MemberMapperTest {
     }
 
     @Test
-    @Disabled
+    @Transactional
     void update() {
         //given
+        MemberDTO memberDTO = MemberDTO.builder()
+                .id("monday")
+                .passwd("1234")
+                .build();
         //when
+        memberMapper.update(memberDTO);
         //then
     }
 }

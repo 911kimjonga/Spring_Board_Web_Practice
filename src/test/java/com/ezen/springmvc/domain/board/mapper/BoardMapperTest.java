@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,8 +19,17 @@ class BoardMapperTest {
     private BoardMapper boardMapper;
 
     @Test
-    @Disabled
+    @Transactional
     void create() {
+        //given
+        BoardDTO boardDTO = BoardDTO.builder()
+                .category(1)
+                .title("질문게시판")
+                .description("물어보고 싶은 것 질문하는 게시판입니다.")
+                .build();
+        //when
+        boardMapper.create(boardDTO);
+        //then
     }
 
     @Test

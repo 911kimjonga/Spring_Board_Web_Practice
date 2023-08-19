@@ -16,7 +16,7 @@ import lombok.*;
 @Builder
 public class BoardDTO {
     private int boardId;
-    private String category;
+    private int category;
     private String title;
     private String description;
 

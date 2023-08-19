@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,8 +19,18 @@ class MemberServiceTest {
     private MemberService memberService;
 
     @Test
-    @Disabled
+    @Transactional
     void register() {
+        //given
+        MemberDTO memberDTO = MemberDTO.builder()
+                .id("hong")
+                .passwd("1234")
+                .name("홍길동")
+                .email("hong@gmail.com")
+                .build();
+        //when
+        memberService.register(memberDTO);
+        //then
     }
 
     @Test
