@@ -1,6 +1,9 @@
 package com.ezen.springmvc.web.home;
 
+import com.ezen.springmvc.domain.board.dto.BoardDTO;
+import com.ezen.springmvc.domain.board.service.BoardService;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +18,14 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 @Slf4j
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final BoardService boardService;
 
     @GetMapping("")
     public String home(HttpSession session, Model model) {
-        Map<String, Object> board = new HashMap<>();
-        board.put("bid", 10);
-        board.put("bname", "자유게시판");
-
-        List<Map<String, Object>> boardList = new ArrayList<>();
-        boardList.add(board);
+        List<BoardDTO> boardList = boardService.getBoardList();
 
         session.setAttribute("boardList", boardList);
 

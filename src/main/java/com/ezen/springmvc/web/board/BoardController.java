@@ -1,12 +1,11 @@
 package com.ezen.springmvc.web.board;
 
+import com.ezen.springmvc.domain.board.dto.ArticleDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
@@ -17,21 +16,23 @@ import java.util.Map;
 @Slf4j
 public class BoardController {
 
-    @GetMapping("/{id}")
-    public String board(@PathVariable int id, Model model) {
-        model.addAttribute("bid", id);
+    @GetMapping("/{bid}")
+    public String board(@PathVariable int bid, Model model) {
+        model.addAttribute("bid", bid);
         return "list";
     }
 
-    @GetMapping("/{id}/article/regist")
-    public String registViewArticle(@PathVariable int id, Model model) {
+    @GetMapping("/{bid}/article/write")
+    public String writeView(@PathVariable int bid, Model model) {
+        model.addAttribute("bid", bid);
         return "register";
     }
 
-    @PostMapping("/{bid}/article/regist")
-    public String registArticle(@PathVariable int bid, Model model, RedirectAttributes redirectAttributes) {
-        int aid = 1;
-        return "redirect:/article/" + aid;
+    @PostMapping("/{bid}/article/write")
+    public String writeArticle(@PathVariable int bid, @ModelAttribute ArticleDTO articleDTO, Model model) {
+        log.info("{}", articleDTO);
+//        return "redirect:/article/" + aid;
+        return "redirect:/board/" + bid;
     }
 
 }
