@@ -1,8 +1,7 @@
-package com.ezen.springmvc.domain.board.mapper;
+package com.ezen.springmvc.domain.board.service;
 
 import com.ezen.springmvc.domain.board.dto.ArticleDTO;
 import com.ezen.springmvc.domain.common.web.PageParams;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +14,14 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Slf4j
-class ArticleMapperTest {
+class ArticleServiceTest {
 
     @Autowired
-    private ArticleMapper articleMapper;
+    private ArticleService articleService;
 
     @Test
     @Transactional
-    void create() {
+    void writeNew() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -33,13 +31,13 @@ class ArticleMapperTest {
                 .passwd("1234")
                 .build();
         //when
-        articleMapper.create(articleDTO);
+        articleService.writeNew(articleDTO);
         //then
     }
 
     @Test
     @Transactional
-    void createReply() {
+    void writeReply() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -52,55 +50,25 @@ class ArticleMapperTest {
                 .build();
         int parentArticleId = 1;
         //when
-        articleMapper.createReply(articleDTO, parentArticleId);
+        articleService.writeReply(articleDTO, parentArticleId);
         //then
     }
 
     @Test
-    void findArticleForReply() {
+    void getCountArticle() {
         //given
-        int parentArticleId = 1;
-        //when
-        ArticleDTO articleDTO = articleMapper.findArticleForReply(parentArticleId);
-        //then
-        Assertions.assertThat(articleDTO)
-                .isNotNull();
-    }
-
-    @Test
-    @Transactional
-    void updateOrderNo() {
-        //given
-        ArticleDTO replyArticleDTO = ArticleDTO.builder()
-                .boardId(10)
-                .writer("monday")
-                .subject("테스트 리플 월요일 제목")
-                .content("테스트 리플 월요일 내용")
-                .passwd("1234")
-                .groupNo(1)
-                .levelNo(1)
-                .build();
-        //when
-        articleMapper.updateOrderNo(replyArticleDTO);
-        //then
-    }
-
-    @Test
-    void getCountAll() {
-        //given
-        int boardId = 20;
+        int boardId = 10;
         String type = "";
-        String keyword = "";
+        String keyword = "제목";
         //when
-        int count = articleMapper.getCountAll(boardId, type, keyword);
+        int count = articleService.getCountArticle(boardId, type, keyword);
         //then
-        log.info("{}", count);
         Assertions.assertThat(count)
                 .isNotZero();
     }
 
     @Test
-    void findByAll() {
+    void getArticleList() {
         //given
         PageParams pageParams = PageParams.builder()
                 .elementSize(5)
@@ -112,28 +80,18 @@ class ArticleMapperTest {
                 .keyword("제목")
                 .build();
         //when
-        List<ArticleDTO> list = articleMapper.findByAll(pageParams);
+        List<ArticleDTO> list = articleService.getArticleList(pageParams);
         //then
         Assertions.assertThat(list)
                 .isNotNull();
     }
 
     @Test
-    @Transactional
-    void updateHitCount() {
+    void getArticle() {
         //given
         int articleId = 1;
         //when
-        articleMapper.updateHitCount(articleId);
-        //then
-    }
-
-    @Test
-    void readArticle() {
-        //given
-        int articleId = 1;
-        //when
-        ArticleDTO articleDTO = articleMapper.readArticle(articleId);
+        ArticleDTO articleDTO = articleService.getArticle(articleId);
         //then
         Assertions.assertThat(articleDTO)
                 .isNotNull();
@@ -141,7 +99,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void update() {
+    void updateArticle() {
         //given
         int articleId = 1;
         ArticleDTO articleDTO = ArticleDTO.builder()
@@ -151,17 +109,17 @@ class ArticleMapperTest {
                 .passwd("2345")
                 .build();
         //when
-        articleMapper.update(articleId, articleDTO);
+        articleService.updateArticle(articleId, articleDTO);
         //then
     }
 
     @Test
     @Transactional
-    void delete() {
+    void deleteArticle() {
         //given
         int articleId = 1;
         //when
-        articleMapper.delete(articleId);
+        articleService.deleteArticle(articleId);
         //then
     }
 }

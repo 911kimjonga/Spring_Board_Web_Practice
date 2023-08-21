@@ -35,6 +35,9 @@ public class PageParams {
     // 게시판 아이디
     private int boardId;
 
+    // 검색 타입
+    private String type;
+
     // 검색 키워드
     private String keyword;
 }

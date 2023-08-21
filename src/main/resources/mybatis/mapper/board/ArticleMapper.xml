@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.board.mapper.ArticleMapper">
 
-    <!-- 신규 게시글 등록 -->
+    <!-- 신규 게시글, 댓글 등록 -->
     <insert id="create" parameterType="ArticleDTO">
         INSERT INTO article (
             article_id,
@@ -16,44 +16,43 @@
             level_no,
             order_no)
         VALUES (
-                   article_id_seq.NEXTVAL,
-                   #{boardId},
-                   #{writer},
-                   #{subject},
-                   #{content},
-                   #{passwd},
-                   article_id_seq.CURRVAL,
-                   #{levelNo},
-                   #{orderNo})
+                article_id_seq.NEXTVAL,
+                #{boardId},
+                #{writer},
+                #{subject},
+                #{content},
+                #{passwd},
+                article_id_seq.CURRVAL,
+                0,
+                0)
     </insert>
 
-    <!-- 댓글 등록 -->
-    <insert id="createReply">
+    <insert id="createReply" parameterType="ArticleDTO">
         INSERT INTO article (
-            article_id,
-            board_id,
-            writer,
-            subject,
-            content,
-            passwd,
-            group_no,
-            level_no,
-            order_no)
+        article_id,
+        board_id,
+        writer,
+        subject,
+        content,
+        passwd,
+        group_no,
+        level_no,
+        order_no)
         VALUES (
-                   article_id_seq.NEXTVAL,
-                   #{articleDTO.boardId},
-                   #{articleDTO.writer},
-                   #{articleDTO.subject},
-                   #{articleDTO.content},
-                   #{articleDTO.passwd},
-                   #{articleDTO.groupNo},
-                   #{articleDTO.levelNo} + 1,
-                   (SELECT
-                        order_no + 1
-                    FROM
-                        article
-                    WHERE
-                        article_id = #{parentArticleId}))
+        article_id_seq.NEXTVAL,
+        #{articleDTO.boardId},
+        #{articleDTO.writer},
+        #{articleDTO.subject},
+        #{articleDTO.content},
+        #{articleDTO.passwd},
+        #{articleDTO.groupNo},
+        #{articleDTO.levelNo} + 1,
+        ( SELECT
+        order_no + 1
+        FROM
+        article
+        WHERE
+        article_id = #{parentArticleId}))
     </insert>
 
     <!-- 댓글 등록을 위한 부모 게시글 조회 -->
@@ -76,9 +75,9 @@
         SET
             order_no = order_no + 1
         WHERE
-            board_id = #{boardId} AND
-            group_no = #{groupNo} AND
-                order_no > (SELECT
+            board_id = #{boardId}
+            AND group_no = #{groupNo}
+            AND order_no > (SELECT
                                 order_no
                             FROM
                                 article
@@ -87,45 +86,69 @@
     </update>
 
     <!-- 페이징 계산 후 게시글 전체 갯수 조회 -->
-    <select id="getCountAll" resultType="int" >
+    <select id="getCountAll" parameterType="object" resultType="int" >
         SELECT
-            COUNT(article_id) "cnt"
+            COUNT(article_id) "count"
         FROM
             article
-        WHERE
-           board_id = #{boardId}
-           AND writer = '%' || #{keyword} || '%'
-           OR subject LIKE '%' || #{keyword} || '%'
-           OR content LIKE '%' || #{keyword} || '%'
+        <where>
+            <if test="keyword != null and !keyword.equals('')">
+                <if test="type == 'writer' or type == 'all'">
+                    OR writer LIKE '%' || #{keyword} || '%'
+                </if>
+                <if test="type == 'subject' or type == 'subcon' or type == 'all'">
+                    OR subject LIKE '%' || #{keyword} || '%'
+                </if>
+                <if test="type == 'content' or type == 'subcon' or type == 'all'">
+                    OR content LIKE '%' || #{keyword} || '%'
+                </if>
+            </if>
+            AND board_id = #{boardId}
+        </where>
     </select>
 
     <!-- 페이징 계산 후 게시글 목록 검색 -->
     <select id="findByAll" parameterType="PageParams" resultType="ArticleDTO">
         SELECT
+            article_id,
             subject,
             writer,
             regdate,
-            hitcount
+            hitcount,
+            level_no
         FROM (
-                 SELECT
-                     CEIL(rownum / #{elementSize}) request_page,
-                     subject,
-                     writer,
-                     TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
-                     hitcount
-                 FROM (
-                          SELECT
-                              subject,
-                              writer,
-                              regdate,
-                              hitcount
-                          FROM
-                              article
-                          WHERE
-                             board_id = #{boardId}
-                             AND writer  LIKE '%' || #{keyword} || '%'
-                             OR subject LIKE '%' || #{keyword} || '%'
-                             OR content LIKE '%' || #{keyword} || '%'
+                SELECT
+                    CEIL(rownum / #{elementSize}) request_page,
+                    article_id,
+                    subject,
+                    writer,
+                    TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate,
+                    hitcount,
+                    level_no
+                FROM (
+                        SELECT
+                            article_id,
+                            subject,
+                            writer,
+                            regdate,
+                            hitcount,
+                            level_no
+                        FROM
+                            article
+                        <where>
+                            <if test="keyword != null and !keyword.equals('')">
+                                <if test="type == 'writer' or type == 'all'">
+                                    OR writer LIKE '%' || #{keyword} || '%'
+                                </if>
+                                <if test="type == 'subject' or type == 'subcon' or type == 'all'">
+                                    OR subject LIKE '%' || #{keyword} || '%'
+                                </if>
+                                <if test="type == 'content' or type == 'subcon' or type == 'all'">
+                                    OR content LIKE '%' || #{keyword} || '%'
+                                </if>
+                            </if>
+                            AND board_id = #{boardId}
+                        </where>
                           ORDER  BY group_no DESC,
                                     order_no ASC))
         WHERE  request_page = #{requestPage}
@@ -135,9 +158,8 @@
     <update id="updateHitCount" parameterType="int">
         UPDATE
             article
-        <set>
+        SET
             hitcount = hitcount + 1
-        </set>
         WHERE
             article_id = #{value}
     </update>
@@ -151,11 +173,11 @@
             subject,
             content,
             regdate,
-            hitcount
-        FROM
-            article
-        WHERE
-            article_id = #{value}
+            hitcount,
+            group_no,
+            level_no
+        FROM   article
+        WHERE article_id = #{articleId}
     </select>
 
     <!-- 게시글 수정 -->
@@ -163,10 +185,19 @@
         UPDATE
             article
         <set>
-            <if test="articleDTO.boardId != 0">board_id = #{articleDTO.boardId},</if>
-            <if test="articleDTO.subject != null">subject = #{articleDTO.subject},</if>
-            <if test="articleDTO.content != null">content = #{articleDTO.content},</if>
-            <if test="articleDTO.passwd != null">passwd = #{articleDTO.passwd}</if>
+            <if test="articleDTO.boardId != 0 and !articleDTO.boardId.equals('')">
+                board_id = #{articleDTO.boardId},
+            </if>
+            <if test="articleDTO.subject != null and !articleDTO.subject.equals('')">
+                subject = #{articleDTO.subject},
+            </if>
+            <if test="articleDTO.content != null and !articleDTO.content.equals('')">
+                content = #{articleDTO.content},
+            </if>
+            <if test="articleDTO.passwd != null and !articleDTO.passwd.equals('')">
+                passwd = #{articleDTO.passwd},
+            </if>
+            regdate = sysdate
         </set>
         WHERE
             article_id = #{articleId}
