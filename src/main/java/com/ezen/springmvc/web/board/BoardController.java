@@ -19,6 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 게시판 관련 컨트롤러
+ *
+ * @author 김종원
+ */
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
@@ -33,6 +38,17 @@ public class BoardController {
     // 한페이지에 보여지는 페이지 갯수 설정
     private static final int PAGE_SIZE = 5;
 
+    /**
+     * 게시판 화면 출력
+     *
+     * @param bid     게시판 번호
+     * @param page    페이지 번호
+     * @param type    검색 타입
+     * @param keyword 검색 키워드
+     * @param session 세션
+     * @param model   모델
+     * @return 뷰 이름
+     */
     @GetMapping("/{bid}")
     public String board(@PathVariable int bid,
                         @RequestParam(value = "page", required = false) String page,
