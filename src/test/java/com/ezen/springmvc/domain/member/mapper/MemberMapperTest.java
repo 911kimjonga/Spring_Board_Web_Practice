@@ -2,7 +2,6 @@ package com.ezen.springmvc.domain.member.mapper;
 
 import com.ezen.springmvc.domain.member.dto.MemberDTO;
 import com.ezen.springmvc.domain.member.dto.MemberSearchCondition;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class MemberMapperTest {
@@ -40,7 +39,7 @@ class MemberMapperTest {
         //when
         MemberDTO memberDTO = memberMapper.findById(id);
         //then
-        Assertions.assertThat(memberDTO)
+        assertThat(memberDTO)
                 .isNotNull();
     }
 
@@ -52,7 +51,7 @@ class MemberMapperTest {
         //when
         MemberDTO memberDTO = memberMapper.findByIdAndPasswd(id, passwd);
         //then
-        Assertions.assertThat(memberDTO)
+        assertThat(memberDTO)
                 .isNotNull();
     }
 
@@ -61,7 +60,7 @@ class MemberMapperTest {
         //when
         List<MemberDTO> list = memberMapper.findByAll();
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -72,7 +71,7 @@ class MemberMapperTest {
         //when
         List<MemberDTO> list = memberMapper.findByNameLike(name);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -84,7 +83,7 @@ class MemberMapperTest {
         //when
         List<MemberDTO> list = memberMapper.findBySearchType(type, keyword);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -95,7 +94,7 @@ class MemberMapperTest {
         //when
         List<MemberDTO> list = memberMapper.findBySearchAll(keyword);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -110,7 +109,7 @@ class MemberMapperTest {
         //when
         List<MemberDTO> list = memberMapper.findBySearchCondition(memberSearchCondition);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 

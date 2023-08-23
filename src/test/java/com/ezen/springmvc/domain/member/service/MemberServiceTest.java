@@ -1,8 +1,6 @@
 package com.ezen.springmvc.domain.member.service;
 
 import com.ezen.springmvc.domain.member.dto.MemberDTO;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class MemberServiceTest {
@@ -41,7 +39,7 @@ class MemberServiceTest {
         //when
         MemberDTO memberDTO = memberService.isMember(id, passwd);
         //then
-        Assertions.assertThat(memberDTO)
+        assertThat(memberDTO)
                 .isNotNull();
     }
 
@@ -51,7 +49,7 @@ class MemberServiceTest {
         //when
         List<MemberDTO> list = memberService.getMemberList();
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -62,7 +60,7 @@ class MemberServiceTest {
         //when
         MemberDTO memberDTO = memberService.getMember(id);
         //then
-        Assertions.assertThat(memberDTO)
+        assertThat(memberDTO)
                 .isNotNull();
     }
 }

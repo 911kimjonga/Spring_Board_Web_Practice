@@ -3,16 +3,14 @@ package com.ezen.springmvc.domain.board.mapper;
 import com.ezen.springmvc.domain.board.dto.ArticleDTO;
 import com.ezen.springmvc.domain.common.web.PageParams;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Slf4j
@@ -63,7 +61,7 @@ class ArticleMapperTest {
         //when
         ArticleDTO articleDTO = articleMapper.findArticleForReply(parentArticleId);
         //then
-        Assertions.assertThat(articleDTO)
+        assertThat(articleDTO)
                 .isNotNull();
     }
 
@@ -95,7 +93,7 @@ class ArticleMapperTest {
         int count = articleMapper.getCountAll(boardId, type, keyword);
         //then
         log.info("{}", count);
-        Assertions.assertThat(count)
+        assertThat(count)
                 .isNotZero();
     }
 
@@ -114,7 +112,7 @@ class ArticleMapperTest {
         //when
         List<ArticleDTO> list = articleMapper.findByAll(pageParams);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -135,7 +133,7 @@ class ArticleMapperTest {
         //when
         ArticleDTO articleDTO = articleMapper.readArticle(articleId);
         //then
-        Assertions.assertThat(articleDTO)
+        assertThat(articleDTO)
                 .isNotNull();
     }
 

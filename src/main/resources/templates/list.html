@@ -75,20 +75,20 @@
 
             <ul class="pagination h-100 justify-content-center align-items-center">
 
-                <li class="page-item"><a th:if="${pagination.showFirst}" th:href="@{?page=1}" class="page-link">처음으로</a></li>
-                <li class="page-item"><a th:if="${pagination.showPrevious}" th:href="@{|?page=${pagination.previousStartPage}|}" class="page-link">이전목록</a></li>
+                <li class="page-item"><a th:if="${pagination.showFirst}" th:href="@{?page=1&keyword=${pagination.params.keyword}}" class="page-link">처음으로</a></li>
+                <li class="page-item"><a th:if="${pagination.showPrevious}" th:href="@{|?page=${pagination.previousStartPage}&keyword=${pagination.params.keyword}|}" class="page-link">이전목록</a></li>
 
                 <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                     <li th:if="${i == pagination.params.requestPage}" class="page-item active">
                         <a th:text="${i}" class="page-link" href="#">1</a>
                     </li>
                     <li th:unless="${i == pagination.params.requestPage}" class="page-item">
-                        <a th:href="@{|?page=${i}|}" th:text="${i}" class="page-link" href="#">2</a>
+                        <a th:href="@{|?page=${i}&keyword=${pagination.params.keyword}|}" th:text="${i}" class="page-link" href="#">2</a>
                     </li>
                 </th:block>
 
-                <li class="page-item"><a th:if="${pagination.showNext}" th:href="@{|?page=${pagination.nextStartPage}|}" class="page-link">다음목록</a></li>
-                <li class="page-item"><a th:if="${pagination.showLast}" th:href="@{|?page=${pagination.totalPages}|}" class="page-link">끝으로</a></li>
+                <li class="page-item"><a th:if="${pagination.showNext}" th:href="@{|?page=${pagination.nextStartPage}&keyword=${pagination.params.keyword}|}" class="page-link">다음목록</a></li>
+                <li class="page-item"><a th:if="${pagination.showLast}" th:href="@{|?page=${pagination.totalPages}&keyword=${pagination.params.keyword}|}" class="page-link">끝으로</a></li>
 
             </ul>
         </div>

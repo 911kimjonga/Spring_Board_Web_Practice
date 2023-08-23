@@ -1,8 +1,6 @@
 package com.ezen.springmvc.domain.board.service;
 
 import com.ezen.springmvc.domain.board.dto.BoardDTO;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class BoardServiceTest {
@@ -38,7 +36,7 @@ class BoardServiceTest {
         //when
         List<BoardDTO> list = boardService.getBoardList();
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -49,7 +47,7 @@ class BoardServiceTest {
         //when
         BoardDTO boardDTO = boardService.getBoard(boardId);
         //then
-        Assertions.assertThat(boardDTO)
+        assertThat(boardDTO)
                 .isNotNull();
     }
 }

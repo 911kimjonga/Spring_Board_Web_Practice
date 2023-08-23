@@ -6,7 +6,8 @@
     <div class="container-fluid">
       <h1 class="mt-4">게시글 쓰기</h1>
       <hr>
-      <form th:action="@{/article/write}" action="#" th:method="post">
+      <form th:if="${state == 'write'}" th:action="@{/article/write}" action="#" th:method="post">
+      <form th:action="@{/article/{aid}/reply(aid=${aid})}" action="#" th:method="post">
         <div class="form-group">
           <label>제목</label>
           <input th:name="'subject'" type="text" class="form-control" name="title" placeholder="Enter Title">
