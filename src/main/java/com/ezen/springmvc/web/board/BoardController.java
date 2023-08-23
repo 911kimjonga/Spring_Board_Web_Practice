@@ -6,18 +6,17 @@ import com.ezen.springmvc.domain.board.service.ArticleService;
 import com.ezen.springmvc.domain.board.service.BoardService;
 import com.ezen.springmvc.domain.common.web.PageParams;
 import com.ezen.springmvc.domain.common.web.Pagination;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 게시판 관련 컨트롤러
@@ -34,7 +33,7 @@ public class BoardController {
     private final ArticleService articleService;
 
     // 한 페이지에 보여지는 목록 갯수 설정
-    private static final int ELEMENT_SIZE = 3;
+    private static final int ELEMENT_SIZE = 5;
     // 한페이지에 보여지는 페이지 갯수 설정
     private static final int PAGE_SIZE = 5;
 
@@ -57,14 +56,25 @@ public class BoardController {
                         HttpSession session, Model model) {
         BoardDTO boardDTO = boardService.getBoard(bid);
 
-        log.info("페이지 정보 : {}", page);
-        log.info("검색 타입 : {}", type);
-        log.info("검색 키워드 : {}", keyword);
+        log.info("GET 페이지 정보 : {}", page);
+        log.info("GET 검색 타입 : {}", type);
+        log.info("GET 검색 키워드 : {}", keyword);
 
+        if (type == null) {
+            type = "all";
+        }
+        if (keyword == null) {
+            keyword = "";
+        }
         // 사용자 선택페이지
         if (page == null || page.isEmpty()) {
             page = "1";
         }
+
+        log.info("처리 후 페이지 정보 : {}", page);
+        log.info("처리 후 검색 타입 : {}", type);
+        log.info("처리 후 검색 키워드 : {}", keyword);
+
         int selectPage = Integer.parseInt(page);
 
         int count = articleService.getCountArticle(bid, type, keyword);
@@ -82,6 +92,7 @@ public class BoardController {
         List<ArticleDTO> list = articleService.getArticleList(pageParams);
         log.info(pageParams.toString());
         log.info(pagination.toString());
+        log.info(list.toString());
 
         session.setAttribute("board", boardDTO);
         model.addAttribute("bid", bid);

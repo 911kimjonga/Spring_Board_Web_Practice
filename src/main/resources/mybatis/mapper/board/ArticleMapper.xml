@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ezen.springmvc.domain.board.mapper.ArticleMapper">
 
-    <!-- 신규 게시글, 댓글 등록 -->
+    <!-- 신규 게시글 등록 -->
     <insert id="create" parameterType="ArticleDTO">
         INSERT INTO article (
             article_id,
@@ -27,6 +27,7 @@
                 0)
     </insert>
 
+    <!-- 댓글 등록 -->
     <insert id="createReply" parameterType="ArticleDTO">
         INSERT INTO article (
         article_id,
@@ -93,13 +94,13 @@
             article
         <where>
             <if test="keyword != null and !keyword.equals('')">
-                <if test="type == 'writer' or type == 'all'">
+                <if test="type == 'writer' or type == 'all' or type == 'subconwri'">
                     OR writer LIKE '%' || #{keyword} || '%'
                 </if>
-                <if test="type == 'subject' or type == 'subcon' or type == 'all'">
+                <if test="type == 'subject' or type == 'subcon' or type == 'all' or type == 'subconwri'">
                     OR subject LIKE '%' || #{keyword} || '%'
                 </if>
-                <if test="type == 'content' or type == 'subcon' or type == 'all'">
+                <if test="type == 'content' or type == 'subcon' or type == 'all' or type == 'subconwri'">
                     OR content LIKE '%' || #{keyword} || '%'
                 </if>
             </if>
@@ -137,13 +138,13 @@
                             article
                         <where>
                             <if test="keyword != null and !keyword.equals('')">
-                                <if test="type == 'writer' or type == 'all'">
+                                <if test="type == 'writer' or type == 'all' or type == 'subconwri'">
                                     OR writer LIKE '%' || #{keyword} || '%'
                                 </if>
-                                <if test="type == 'subject' or type == 'subcon' or type == 'all'">
+                                <if test="type == 'subject' or type == 'subcon' or type == 'all' or type == 'subconwri'">
                                     OR subject LIKE '%' || #{keyword} || '%'
                                 </if>
-                                <if test="type == 'content' or type == 'subcon' or type == 'all'">
+                                <if test="type == 'content' or type == 'subcon' or type == 'all' or type == 'subconwri'">
                                     OR content LIKE '%' || #{keyword} || '%'
                                 </if>
                             </if>

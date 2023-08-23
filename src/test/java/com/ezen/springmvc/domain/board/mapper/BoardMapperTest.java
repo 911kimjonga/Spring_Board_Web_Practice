@@ -1,14 +1,14 @@
 package com.ezen.springmvc.domain.board.mapper;
 
 import com.ezen.springmvc.domain.board.dto.BoardDTO;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class BoardMapperTest {
@@ -36,7 +36,7 @@ class BoardMapperTest {
         //when
         List<BoardDTO> list = boardMapper.findAll();
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -47,7 +47,7 @@ class BoardMapperTest {
         //when
         BoardDTO boardDTO = boardMapper.findById(boardId);
         //then
-        Assertions.assertThat(boardDTO)
+        assertThat(boardDTO)
                 .isNotNull();
     }
 }

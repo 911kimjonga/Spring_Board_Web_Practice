@@ -4,7 +4,7 @@
 <th:block th:replace="~{/layout/layoutV1 :: setContent(~{this :: content})}">
     <th:block th:fragment="content">
         <div class="container-fluid">
-            <h2 class="mt-4">자유게시판 목록
+            <h2 class="mt-4"><th:block th:text="|${session.board.title} 목록|">자유게시판 목록</th:block>
                 <span>
                   <a th:href="@{/article/write}" href="#">
                     <button type="button" class="btn btn-success">게시글 쓰기</button>
@@ -19,15 +19,16 @@
                     <input type="hidden" name="page" value="1">
                     <div class="input-group-prepend">
                         <select class="custom-select" name="type">
-                            <option th:text="통합검색" th:value="all" selected>----- 검색유형 -----</option>
-                            <option th:value="subject">제목</option>
-                            <option th:value="content">내용</option>
-                            <option th:value="writer">작성자</option>
-                            <option th:value="subcon">제목 + 내용</option>
-                            <option th:value="all">제목 + 내용 + 작성자</option>
+                            <option th:selected="${pagination.params.type == 'all'}" th:text="통합검색" th:value="all" selected>----- 검색유형 -----</option>
+                            <option th:selected="${pagination.params.type == 'subject'}" th:value="subject">제목</option>
+                            <option th:selected="${pagination.params.type == 'content'}" th:value="content">내용</option>
+                            <option th:selected="${pagination.params.type == 'writer'}" th:value="writer">작성자</option>
+                            <option th:selected="${pagination.params.type == 'subcon'}" th:value="subcon">제목 + 내용</option>
+                            <option th:selected="${pagination.params.type == 'subconwri'}" th:value="subconwri">제목 + 내용 + 작성자</option>
                         </select>
                     </div>
-                    <input th:name="keyword" type="search" class="form-control" name="value">
+                    <input th:if="${pagination.params.keyword == ''}" th:name="keyword" type="search" class="form-control" name="value">
+                    <input th:if="${pagination.params.keyword != ''}" th:value="${pagination.params.keyword}" th:name="keyword" type="search" class="form-control" name="value">
                     <div class="input-group-append" id="button-addon4">
                         <button th:type="submit" class="btn btn-success btn-search" type="button">검색</button>
                     </div>
@@ -75,20 +76,20 @@
 
             <ul class="pagination h-100 justify-content-center align-items-center">
 
-                <li class="page-item"><a th:if="${pagination.showFirst}" th:href="@{?page=1}" class="page-link">처음으로</a></li>
-                <li class="page-item"><a th:if="${pagination.showPrevious}" th:href="@{|?page=${pagination.previousStartPage}|}" class="page-link">이전목록</a></li>
+                <li class="page-item"><a th:if="${pagination.showFirst}" th:href="@{|?page=1&type=${pagination.params.type}&keyword=${pagination.params.keyword}|}" class="page-link">처음으로</a></li>
+                <li class="page-item"><a th:if="${pagination.showPrevious}" th:href="@{|?page=${pagination.previousStartPage}&type=${pagination.params.type}&keyword=${pagination.params.keyword}|}" class="page-link">이전목록</a></li>
 
                 <th:block th:each="i : ${#numbers.sequence(pagination.getStartPage(), pagination.getEndPage())}">
                     <li th:if="${i == pagination.params.requestPage}" class="page-item active">
-                        <a th:text="${i}" class="page-link" href="#">1</a>
+                        <a th:href th:disabled th:text="${i}" class="page-link" href="#">1</a>
                     </li>
                     <li th:unless="${i == pagination.params.requestPage}" class="page-item">
-                        <a th:href="@{|?page=${i}|}" th:text="${i}" class="page-link" href="#">2</a>
+                        <a th:href="@{|?page=${i}&type=${pagination.params.type}&keyword=${pagination.params.keyword}|}" th:text="${i}" class="page-link" href="#">2</a>
                     </li>
                 </th:block>
 
-                <li class="page-item"><a th:if="${pagination.showNext}" th:href="@{|?page=${pagination.nextStartPage}|}" class="page-link">다음목록</a></li>
-                <li class="page-item"><a th:if="${pagination.showLast}" th:href="@{|?page=${pagination.totalPages}|}" class="page-link">끝으로</a></li>
+                <li class="page-item"><a th:if="${pagination.showNext}" th:href="@{|?page=${pagination.nextStartPage}&type=${pagination.params.type}&keyword=${pagination.params.keyword}|}" class="page-link">다음목록</a></li>
+                <li class="page-item"><a th:if="${pagination.showLast}" th:href="@{|?page=${pagination.totalPages}&type=${pagination.params.type}&keyword=${pagination.params.keyword}|}" class="page-link">끝으로</a></li>
 
             </ul>
         </div>

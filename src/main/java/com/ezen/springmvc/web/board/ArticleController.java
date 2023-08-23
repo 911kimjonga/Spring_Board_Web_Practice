@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * 게시글 관련 컨트롤러
  *
@@ -33,6 +31,7 @@ public class ArticleController {
      */
     @GetMapping("/write")
     public String writeView(Model model) {
+        model.addAttribute("state", "writeview");
         return "register";
     }
 
@@ -76,8 +75,9 @@ public class ArticleController {
      */
     @GetMapping("/{aid}/reply")
     public String replyView(@PathVariable("aid") int parentArticleId, Model model) {
+        model.addAttribute("state", "replyview");
         model.addAttribute("aid", parentArticleId);
-        return "reply";
+        return "register";
     }
 
     /**
@@ -110,7 +110,8 @@ public class ArticleController {
     public String editView(@PathVariable("aid") int articleId, Model model) {
         ArticleDTO articleDTO = articleService.getArticle(articleId);
         model.addAttribute("article", articleDTO);
-        return "edit";
+        model.addAttribute("state", "editview");
+        return "register";
     }
 
     /**

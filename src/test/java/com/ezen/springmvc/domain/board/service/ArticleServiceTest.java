@@ -2,16 +2,14 @@ package com.ezen.springmvc.domain.board.service;
 
 import com.ezen.springmvc.domain.board.dto.ArticleDTO;
 import com.ezen.springmvc.domain.common.web.PageParams;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class ArticleServiceTest {
@@ -63,7 +61,7 @@ class ArticleServiceTest {
         //when
         int count = articleService.getCountArticle(boardId, type, keyword);
         //then
-        Assertions.assertThat(count)
+        assertThat(count)
                 .isNotZero();
     }
 
@@ -82,7 +80,7 @@ class ArticleServiceTest {
         //when
         List<ArticleDTO> list = articleService.getArticleList(pageParams);
         //then
-        Assertions.assertThat(list)
+        assertThat(list)
                 .isNotNull();
     }
 
@@ -93,7 +91,7 @@ class ArticleServiceTest {
         //when
         ArticleDTO articleDTO = articleService.getArticle(articleId);
         //then
-        Assertions.assertThat(articleDTO)
+        assertThat(articleDTO)
                 .isNotNull();
     }
 

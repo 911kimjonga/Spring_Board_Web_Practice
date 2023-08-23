@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @SpringBootTest
 @Slf4j
 class ArticleMapperTest {
@@ -21,14 +20,14 @@ class ArticleMapperTest {
     private ArticleMapper articleMapper;
 
     @Test
-    @Transactional
+//    @Transactional
     void create() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
                 .writer("monday")
-                .subject("테스트 신규 월요일 제목")
-                .content("테스트 신규 월요일 내용")
+                .subject("테스트 신규 월요일2 제목")
+                .content("테스트 신규 월요일2 내용")
                 .passwd("1234")
                 .build();
         //when
