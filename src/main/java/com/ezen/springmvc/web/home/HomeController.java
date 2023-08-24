@@ -10,10 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 메인 화면 컨트롤러
@@ -37,8 +34,8 @@ public class HomeController {
      */
     @GetMapping("")
     public String home(HttpSession session, Model model) {
-        List<BoardDTO> boardList = boardService.getBoardList();
 
+        List<BoardDTO> boardList = boardService.getBoardList();
         session.setAttribute("boardList", boardList);
 
         return "index";

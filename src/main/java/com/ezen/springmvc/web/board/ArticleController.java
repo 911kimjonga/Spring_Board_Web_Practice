@@ -3,6 +3,7 @@ package com.ezen.springmvc.web.board;
 import com.ezen.springmvc.domain.board.dto.ArticleDTO;
 import com.ezen.springmvc.domain.board.dto.BoardDTO;
 import com.ezen.springmvc.domain.board.service.ArticleService;
+import com.ezen.springmvc.domain.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +31,12 @@ public class ArticleController {
      * @return 뷰 이름
      */
     @GetMapping("/write")
-    public String writeView(Model model) {
+    public String writeView(@SessionAttribute(value = "loginMember", required = false) MemberDTO member, Model model) {
+        if (member == null) {
+            return "redirect:/member/login";
+        }
         model.addAttribute("state", "writeview");
-        return "register";
+        return "article/register";
     }
 
     /**
@@ -63,7 +67,7 @@ public class ArticleController {
     public String readArticle(@PathVariable("aid") int articleId, Model model) {
         ArticleDTO articleDTO = articleService.getArticle(articleId);
         model.addAttribute("article", articleDTO);
-        return "read";
+        return "article/read";
     }
 
     /**
@@ -74,10 +78,14 @@ public class ArticleController {
      * @return 뷰 이름
      */
     @GetMapping("/{aid}/reply")
-    public String replyView(@PathVariable("aid") int parentArticleId, Model model) {
+    public String replyView(@SessionAttribute(value = "loginMember", required = false) MemberDTO member, @PathVariable("aid") int parentArticleId, Model model) {
+        if (member == null) {
+            return "redirect:/member/login";
+        }
+
         model.addAttribute("state", "replyview");
         model.addAttribute("aid", parentArticleId);
-        return "register";
+        return "article/register";
     }
 
     /**
@@ -111,7 +119,7 @@ public class ArticleController {
         ArticleDTO articleDTO = articleService.getArticle(articleId);
         model.addAttribute("article", articleDTO);
         model.addAttribute("state", "editview");
-        return "register";
+        return "article/register";
     }
 
     /**

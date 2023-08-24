@@ -54,6 +54,7 @@ public class BoardController {
                         @RequestParam(value = "type", required = false) String type,
                         @RequestParam(value = "keyword", required = false) String keyword,
                         HttpSession session, Model model) {
+
         BoardDTO boardDTO = boardService.getBoard(bid);
 
         log.info("GET 페이지 정보 : {}", page);
@@ -88,17 +89,20 @@ public class BoardController {
                 .type(type)
                 .keyword(keyword)
                 .build();
-        Pagination pagination = new Pagination(pageParams);
-        List<ArticleDTO> list = articleService.getArticleList(pageParams);
         log.info(pageParams.toString());
+        Pagination pagination = new Pagination(pageParams);
         log.info(pagination.toString());
+        List<ArticleDTO> list = articleService.getArticleList(pageParams);
         log.info(list.toString());
+
+        List<BoardDTO> boardList = boardService.getBoardList();
+        session.setAttribute("boardList", boardList);
 
         session.setAttribute("board", boardDTO);
         model.addAttribute("bid", bid);
         model.addAttribute("articleList", list);
         model.addAttribute("pagination", pagination);
-        return "list";
+        return "board/list";
     }
 
 }

@@ -2,13 +2,13 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="sidebar">
-  <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Full Stack Developer </div>
-    <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-      <a href="#" class="list-group-item list-group-item-action bg-light">Favorites</a>
+    <div class="bg-light border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading">Full Stack Developer</div>
+        <div class="list-group list-group-flush">
+            <a th:if="${session.loginMember != null}" th:href="@{/member/{id}(id=${session.loginMember.id})}" href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a th:text="'Member List'" th:href="@{/member/list}" href="#" class="list-group-item list-group-item-action bg-light">Favorites</a>
+        </div>
     </div>
-  </div>
 </th:block>
 
 </html>

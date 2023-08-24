@@ -88,8 +88,8 @@ class ArticleMapperTest {
     void getCountAll() {
         //given
         int boardId = 20;
-        String type = "";
-        String keyword = "";
+        String type = "all";
+        String keyword = "신";
         //when
         int count = articleMapper.getCountAll(boardId, type, keyword);
         //then

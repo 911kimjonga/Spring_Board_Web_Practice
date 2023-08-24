@@ -47,6 +47,12 @@ dependencies {
     // Thymeleaf 엔진
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    // Bean Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // AOP Module
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

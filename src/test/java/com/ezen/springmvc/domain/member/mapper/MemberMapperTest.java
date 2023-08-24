@@ -22,10 +22,10 @@ class MemberMapperTest {
     void create() {
         //given
         MemberDTO memberDTO = MemberDTO.builder()
-                .id("hong")
+                .id("park")
                 .passwd("1234")
-                .name("홍길동")
-                .email("hong@gmail.com")
+                .name("박길동")
+                .email("park@gmail.com")
                 .build();
         //when
         memberMapper.create(memberDTO);

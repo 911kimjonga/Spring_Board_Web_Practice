@@ -3,28 +3,28 @@
 
 <th:block th:fragment="setContent(content)">
 
-  <th:block th:replace="~{/layout/fragments/head :: head}"></th:block>
+    <th:block th:replace="~{/layout/fragments/head :: head}"></th:block>
 
-  <body>
+    <body>
     <div class="d-flex" id="wrapper">
 
-      <!-- Sidebar -->
-      <th:block th:replace="~{/layout/fragments/sidebar :: sidebar}"></th:block>
-      <!-- /#sidebar-wrapper -->
+        <!-- Sidebar -->
+        <th:block th:replace="~{/layout/fragments/sidebar :: sidebar}"></th:block>
+        <!-- /#sidebar-wrapper -->
 
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <th:block th:replace="~{/layout/fragments/navbar :: navbar}"></th:block>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <th:block th:replace="~{/layout/fragments/navbar :: navbar}"></th:block>
 
-        <th:block th:replace="${content}"></th:block>
-      </div>
-      <!-- /#page-content-wrapper -->
+            <th:block th:replace="${content}"></th:block>
+        </div>
+        <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
 
     <!-- Script -->
     <th:block th:replace="~{/layout/fragments/script :: script}"></th:block>
-  </body>
+    </body>
 
 </th:block>
 
