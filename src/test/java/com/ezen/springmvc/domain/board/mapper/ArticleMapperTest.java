@@ -21,7 +21,7 @@ class ArticleMapperTest {
 
     @Test
 //    @Transactional
-    void create() {
+    void createTest() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -37,7 +37,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void createReply() {
+    void createReplyTest() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -55,7 +55,7 @@ class ArticleMapperTest {
     }
 
     @Test
-    void findArticleForReply() {
+    void findArticleForReplyTest() {
         //given
         int parentArticleId = 1;
         //when
@@ -68,7 +68,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void updateOrderNo() {
+    void updateOrderNoTest() {
         //given
         ArticleDTO replyArticleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -85,7 +85,7 @@ class ArticleMapperTest {
     }
 
     @Test
-    void getCountAll() {
+    void getCountAllTest() {
         //given
         int boardId = 20;
         String type = "all";
@@ -99,7 +99,7 @@ class ArticleMapperTest {
     }
 
     @Test
-    void findByAll() {
+    void findByAllTest() {
         //given
         PageParams pageParams = PageParams.builder()
                 .elementSize(5)
@@ -119,7 +119,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void updateHitCount() {
+    void updateHitCountTest() {
         //given
         int articleId = 1;
         //when
@@ -128,7 +128,7 @@ class ArticleMapperTest {
     }
 
     @Test
-    void readArticle() {
+    void readArticleTest() {
         //given
         int articleId = 1;
         //when
@@ -140,7 +140,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void update() {
+    void updateTest() {
         //given
         int articleId = 1;
         ArticleDTO articleDTO = ArticleDTO.builder()
@@ -156,7 +156,7 @@ class ArticleMapperTest {
 
     @Test
     @Transactional
-    void delete() {
+    void deleteTest() {
         //given
         int articleId = 1;
         //when

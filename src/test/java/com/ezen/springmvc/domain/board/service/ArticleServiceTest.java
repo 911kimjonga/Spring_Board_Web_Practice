@@ -19,7 +19,7 @@ class ArticleServiceTest {
 
     @Test
     @Transactional
-    void writeNew() {
+    void writeNewTest() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -35,7 +35,7 @@ class ArticleServiceTest {
 
     @Test
     @Transactional
-    void writeReply() {
+    void writeReplyTest() {
         //given
         ArticleDTO articleDTO = ArticleDTO.builder()
                 .boardId(10)
@@ -53,7 +53,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getCountArticle() {
+    void getCountArticleTest() {
         //given
         int boardId = 10;
         String type = "";
@@ -66,7 +66,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getArticleList() {
+    void getArticleListTest() {
         //given
         PageParams pageParams = PageParams.builder()
                 .elementSize(5)
@@ -85,7 +85,7 @@ class ArticleServiceTest {
     }
 
     @Test
-    void getArticle() {
+    void getArticleTest() {
         //given
         int articleId = 1;
         //when
@@ -97,7 +97,7 @@ class ArticleServiceTest {
 
     @Test
     @Transactional
-    void updateArticle() {
+    void updateArticleTest() {
         //given
         int articleId = 1;
         ArticleDTO articleDTO = ArticleDTO.builder()
@@ -113,7 +113,7 @@ class ArticleServiceTest {
 
     @Test
     @Transactional
-    void deleteArticle() {
+    void deleteArticleTest() {
         //given
         int articleId = 1;
         //when

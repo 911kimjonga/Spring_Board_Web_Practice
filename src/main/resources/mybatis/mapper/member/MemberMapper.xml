@@ -125,11 +125,17 @@
     <!-- 회원 정보 수정 -->
     <update id="update" parameterType="MemberDTO">
         UPDATE
-            member
-        SET
-            passwd = #{passwd}
+        member
+        <set>
+            <if test="passwd != null and passwd != ''">
+                passwd = #{passwd},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+        </set>
         WHERE
-            id = #{id}
+        id = #{id}
     </update>
 
 </mapper>

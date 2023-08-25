@@ -18,7 +18,7 @@ class BoardMapperTest {
 
     @Test
     @Transactional
-    void create() {
+    void createTest() {
         //given
         BoardDTO boardDTO = BoardDTO.builder()
                 .category(1)
@@ -31,7 +31,7 @@ class BoardMapperTest {
     }
 
     @Test
-    void findAll() {
+    void findAllTest() {
         //given
         //when
         List<BoardDTO> list = boardMapper.findAll();
@@ -41,7 +41,7 @@ class BoardMapperTest {
     }
 
     @Test
-    void findById() {
+    void findByIdTest() {
         //given
         int boardId = 10;
         //when

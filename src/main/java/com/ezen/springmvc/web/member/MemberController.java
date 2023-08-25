@@ -1,7 +1,5 @@
 package com.ezen.springmvc.web.member;
 
-import com.ezen.springmvc.domain.board.dto.BoardDTO;
-import com.ezen.springmvc.domain.board.service.BoardService;
 import com.ezen.springmvc.domain.member.dto.LoginForm;
 import com.ezen.springmvc.domain.member.dto.MemberDTO;
 import com.ezen.springmvc.domain.member.service.MemberService;
@@ -25,14 +23,6 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
-    private final BoardService boardService;
-
-    @RequestMapping("/**")
-    public void aa(HttpSession session, Model model) {
-        log.info("---- 실행 됨 -------");
-        List<BoardDTO> boardList = boardService.getBoardList();
-        session.setAttribute("boardList", boardList);
-    }
 
     /**
      * 회원 가입 화면 출력
@@ -68,7 +58,6 @@ public class MemberController {
             return "member/register";
         }
 
-        log.info("회원 가입 정보 : {}", member);
         memberService.register(member);
         redirectAttributes.addFlashAttribute("status", true);
         return "redirect:/member/" + member.getId();
@@ -83,7 +72,6 @@ public class MemberController {
      */
     @GetMapping("/{id}")
     public String read(@PathVariable("id") String id, Model model) {
-        log.info("회원 상세 요청");
         MemberDTO member = memberService.getMember(id);
         model.addAttribute("member", member);
         return "member/read";
@@ -97,7 +85,6 @@ public class MemberController {
      */
     @GetMapping("/list")
     public String list(Model model) {
-        log.info("회원 목록 요청");
         List<MemberDTO> list = memberService.getMemberList();
         model.addAttribute("list", list);
         return "member/list";
@@ -110,7 +97,7 @@ public class MemberController {
      * @param model 모델
      * @return 뷰 이름
      */
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") String id, HttpSession session, Model model) {
         MemberDTO loginMember = (MemberDTO) session.getAttribute("loginMember");
 
@@ -123,12 +110,11 @@ public class MemberController {
         return "member/edit";
     }
 
-//	@PostMapping("/edit")
-//	public String edit(@ModelAttribute Member member, Model model) {
-//		log.info(MemberDTO.toString());
-//		memberService.editMember(member);
-//		return "redirect:/member/"+member.getId();
-//	}
+	@PostMapping("/{id}/edit")
+	public String edit(@ModelAttribute MemberDTO memberDTO, Model model) {
+		memberService.editMember(memberDTO);
+		return "redirect:/member/"+memberDTO.getId();
+	}
 
     /**
      * 로그인 화면 출력
@@ -157,7 +143,6 @@ public class MemberController {
             return "member/login";
         }
 
-        log.info(loginForm.toString());
         MemberDTO loginMember = memberService.isMember(loginForm.getLoginId(), loginForm.getPasswd());
 
         // 회원이 아닌 경우

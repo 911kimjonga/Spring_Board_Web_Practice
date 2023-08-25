@@ -1,14 +1,12 @@
 package com.ezen.springmvc.domain.member.service;
 
-import java.util.List;
-
+import com.ezen.springmvc.domain.member.dto.MemberDTO;
+import com.ezen.springmvc.domain.member.mapper.MemberMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ezen.springmvc.domain.member.dto.MemberDTO;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 /**
  * MemberService 구현체
@@ -63,5 +61,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public MemberDTO getMember(String id) {
         return memberMapper.findById(id);
+    }
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param memberDTO 수정할 회원 정보
+     */
+    @Override
+    public void editMember(MemberDTO memberDTO) {
+        memberMapper.update(memberDTO);
     }
 }

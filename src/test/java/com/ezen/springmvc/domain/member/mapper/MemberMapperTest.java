@@ -19,7 +19,7 @@ class MemberMapperTest {
 
     @Test
     @Transactional
-    void create() {
+    void createTest() {
         //given
         MemberDTO memberDTO = MemberDTO.builder()
                 .id("park")
@@ -33,7 +33,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findById() {
+    void findByIdTest() {
         //given
         String id = "monday";
         //when
@@ -44,7 +44,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findByIdAndPasswd() {
+    void findByIdAndPasswdTest() {
         //given
         String id = "monday";
         String passwd = "1111";
@@ -56,7 +56,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findByAll() {
+    void findByAllTest() {
         //when
         List<MemberDTO> list = memberMapper.findByAll();
         //then
@@ -65,7 +65,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findByNameLike() {
+    void findByNameLikeTest() {
         //given
         String name = "요일";
         //when
@@ -76,7 +76,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findBySearchType() {
+    void findBySearchTypeTest() {
         //given
         String type = "name";
         String keyword = "월요일";
@@ -88,7 +88,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findBySearchAll() {
+    void findBySearchAllTest() {
         //given
         String keyword = "요일";
         //when
@@ -99,7 +99,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void findBySearchCondition() {
+    void findBySearchConditionTest() {
         //given
         MemberSearchCondition memberSearchCondition = MemberSearchCondition.builder()
                 .id(null)
@@ -115,7 +115,7 @@ class MemberMapperTest {
 
     @Test
     @Transactional
-    void update() {
+    void updateTest() {
         //given
         MemberDTO memberDTO = MemberDTO.builder()
                 .id("monday")

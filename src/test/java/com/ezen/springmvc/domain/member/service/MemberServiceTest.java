@@ -18,7 +18,7 @@ class MemberServiceTest {
 
     @Test
     @Transactional
-    void register() {
+    void registerTest() {
         //given
         MemberDTO memberDTO = MemberDTO.builder()
                 .id("park")
@@ -32,10 +32,10 @@ class MemberServiceTest {
     }
 
     @Test
-    void isMember() {
+    void isMemberTest() {
         //given
         String id = "monday";
-        String passwd = "1111";
+        String passwd = "1234";
         //when
         MemberDTO memberDTO = memberService.isMember(id, passwd);
         //then
@@ -44,7 +44,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void getMemberList() {
+    void getMemberListTest() {
         //given
         //when
         List<MemberDTO> list = memberService.getMemberList();
@@ -54,7 +54,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void getMember() {
+    void getMemberTest() {
         //given
         String id = "monday";
         //when
@@ -62,5 +62,20 @@ class MemberServiceTest {
         //then
         assertThat(memberDTO)
                 .isNotNull();
+    }
+
+    @Test
+    @Transactional
+    void editMemberTest() {
+        // given
+        MemberDTO memberDTO = MemberDTO.builder()
+                .id("hong")
+                .passwd("1111")
+                .name("홍길동")
+                .email("hong1@gmail.com")
+                .build();
+        // when
+        memberService.editMember(memberDTO);
+        // then
     }
 }

@@ -27,7 +27,7 @@
                         게시판
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <th:block th:each="board : ${session.boardList}">
+                        <th:block th:each="board : ${boardList}">
                             <a th:text="${board.title}" th:href="@{/board/{boardId}(boardId=${board.boardId})}"
                                class="dropdown-item" href="#">자유게시판</a>
                         </th:block>

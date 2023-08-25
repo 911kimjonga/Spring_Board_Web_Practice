@@ -57,10 +57,6 @@ public class BoardController {
 
         BoardDTO boardDTO = boardService.getBoard(bid);
 
-        log.info("GET 페이지 정보 : {}", page);
-        log.info("GET 검색 타입 : {}", type);
-        log.info("GET 검색 키워드 : {}", keyword);
-
         if (type == null) {
             type = "all";
         }
@@ -72,14 +68,9 @@ public class BoardController {
             page = "1";
         }
 
-        log.info("처리 후 페이지 정보 : {}", page);
-        log.info("처리 후 검색 타입 : {}", type);
-        log.info("처리 후 검색 키워드 : {}", keyword);
-
         int selectPage = Integer.parseInt(page);
 
         int count = articleService.getCountArticle(bid, type, keyword);
-        log.info("글 갯수 : {}", count);
         PageParams pageParams = PageParams.builder()
                 .elementSize(ELEMENT_SIZE)
                 .pageSize(PAGE_SIZE)
@@ -89,14 +80,8 @@ public class BoardController {
                 .type(type)
                 .keyword(keyword)
                 .build();
-        log.info(pageParams.toString());
         Pagination pagination = new Pagination(pageParams);
-        log.info(pagination.toString());
         List<ArticleDTO> list = articleService.getArticleList(pageParams);
-        log.info(list.toString());
-
-        List<BoardDTO> boardList = boardService.getBoardList();
-        session.setAttribute("boardList", boardList);
 
         session.setAttribute("board", boardDTO);
         model.addAttribute("bid", bid);

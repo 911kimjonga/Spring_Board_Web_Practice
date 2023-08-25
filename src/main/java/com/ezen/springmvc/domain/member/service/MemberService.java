@@ -1,8 +1,8 @@
 package com.ezen.springmvc.domain.member.service;
 
-import java.util.List;
-
 import com.ezen.springmvc.domain.member.dto.MemberDTO;
+
+import java.util.List;
 
 /**
  * 회원 관련 서비스 인터페이스
@@ -41,4 +41,11 @@ public interface MemberService {
      * @return 회원 정보
      */
     public MemberDTO getMember(String id);
+
+    /**
+     * 회원 정보 수정
+     * 
+     * @param memberDTO 수정할 회원 정보
+     */
+    public void editMember(MemberDTO memberDTO);
 }

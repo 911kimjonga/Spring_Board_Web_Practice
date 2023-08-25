@@ -30,7 +30,7 @@
 		
 		<a href="#" th:href="@{/}" class="btn btn-primary">홈으로</a>
 		<a href="#" th:href="@{/member/list}" class="btn btn-info">회원목록</a>
-		<a th:if="${session.loginMember != null and member.id == session.loginMember.id}" href="#" th:href="@{|/member/edit/${member.id}|}" class="btn btn-info">회원정보수정</a>
+		<a th:if="${session.loginMember != null and member.id == session.loginMember.id}" href="#" th:href="@{/member/{id}/edit(id=${member.id})}" class="btn btn-info">회원정보수정</a>
 
 	</div>
 

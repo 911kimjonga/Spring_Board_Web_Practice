@@ -18,7 +18,7 @@ class BoardServiceTest {
 
     @Test
     @Transactional
-    void regist() {
+    void registTest() {
         //given
         BoardDTO boardDTO = BoardDTO.builder()
                 .category(1)
@@ -31,7 +31,7 @@ class BoardServiceTest {
     }
 
     @Test
-    void getBoardList() {
+    void getBoardListTest() {
         //given
         //when
         List<BoardDTO> list = boardService.getBoardList();
@@ -41,7 +41,7 @@ class BoardServiceTest {
     }
 
     @Test
-    void getBoard() {
+    void getBoardTest() {
         //given
         int boardId = 10;
         //when

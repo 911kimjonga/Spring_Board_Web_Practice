@@ -51,6 +51,7 @@ public class ArticleController {
     public String writeArticle(@ModelAttribute ArticleDTO articleDTO, HttpSession session, Model model) {
         BoardDTO boardDTO = (BoardDTO) session.getAttribute("board");
         articleDTO.setBoardId(boardDTO.getBoardId());
+
         articleService.writeNew(articleDTO);
         session.removeAttribute("board");
         return "redirect:/board/" + boardDTO.getBoardId();
@@ -102,7 +103,7 @@ public class ArticleController {
         articleDTO.setBoardId(parentArticleDTO.getBoardId());
         articleDTO.setGroupNo(parentArticleDTO.getGroupNo());
         articleDTO.setLevelNo(parentArticleDTO.getLevelNo());
-        log.info(articleDTO.toString());
+
         articleService.writeReply(articleDTO, parentArticleId);
         return "redirect:/board/" + parentArticleDTO.getBoardId();
     }
@@ -135,7 +136,7 @@ public class ArticleController {
         ArticleDTO editArticleDTO = articleService.getArticle(articleId);
         articleDTO.setArticleId(articleId);
         articleDTO.setBoardId(editArticleDTO.getBoardId());
-        log.info(articleDTO.toString());
+
         articleService.updateArticle(articleId, articleDTO);
         return "redirect:/article/" + articleId;
     }
